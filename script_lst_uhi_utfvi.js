@@ -39,7 +39,6 @@ function MascaraNubes(col) {
 }
 
 // PROCESAMIENTO
-
 var image = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
     .filterDate(fecha_inicio, fecha_fin)
     .filterBounds(ae)
@@ -95,7 +94,7 @@ var lst = thermal.expression(
     }
 ).rename('LST');
 
-// Paleta térmica profesional
+// Paleta térmica
 var lst_vis = {
     min: 10,
     max: 45,
@@ -161,39 +160,37 @@ var utfvi_vis = {
 
 Map.addLayer(utfvi, utfvi_vis, 'UTFVI');
 
-// EXPORTAR RESULTADOS
-
 // Exportar LST
 Export.image.toDrive({
     image: lst,
-    description: 'LST_Santiago',
+    description: 'LST_RM',
     folder: 'GEE_Exports',
     region: ae,
     scale: 30,
     maxPixels: 1e13,
-    crs: 'EPSG:5361'
+    crs: 'EPSG:4326'
 });
 
 // Exportar UHI
 Export.image.toDrive({
     image: uhi,
-    description: 'UHI_Santiago',
+    description: 'UHI_RM',
     folder: 'GEE_Exports',
     region: ae,
     scale: 30,
     maxPixels: 1e13,
-    crs: 'EPSG:5361',
+    crs: 'EPSG:4326',
 });
 
 // Exportar UTFVI
 Export.image.toDrive({
     image: utfvi,
-    description: 'UTFVI_Santiago',
+    description: 'UTFVI_RM',
     folder: 'GEE_Exports',
     region: ae,
     scale: 30,
     maxPixels: 1e13,
-    crs: 'EPSG:5361'
+    crs: 'EPSG:4326'
 });
 
 // GRÁFICOS Y VISUALIZACIONES
